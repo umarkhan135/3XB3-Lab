@@ -16,7 +16,6 @@ def bubble_up(L, i):
 def bubble_up2(L, i):
     current = L[i]
     while i < len(L) - 1:
-        print(L)
         if current > L[i + 1]:
             L[i] = L[i + 1]
         else:
