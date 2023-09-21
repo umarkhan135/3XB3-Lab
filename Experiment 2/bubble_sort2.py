@@ -4,7 +4,7 @@ def bubble_sort2(L):
 
 def bubble_sort3(L):
     for i in range(len(L)):
-        bubble_up2(L, i)
+        bubble_up2(L,0)
 
 def bubble_up(L, i):
     current = L[i]
@@ -16,6 +16,7 @@ def bubble_up(L, i):
 def bubble_up2(L, i):
     current = L[i]
     while i < len(L) - 1:
+        print(L)
         if current > L[i + 1]:
             L[i] = L[i + 1]
         else:
@@ -28,7 +29,7 @@ def bubble_up2(L, i):
 
 list = [7, 2, 5, 9, 1, 4, 3, 6, 8]
 bubble_sort2(list)
-print(list)
+#print(list)
 
 list = [7, 2, 5, 9, 1, 4, 3, 6, 8]
 bubble_sort3(list)
