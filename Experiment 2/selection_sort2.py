@@ -11,6 +11,7 @@ def selection_sort(L):
         swap(L, len(L) - i - 1, max_index)
         
         
+        
 
 
 def find_min_index(L, n):
