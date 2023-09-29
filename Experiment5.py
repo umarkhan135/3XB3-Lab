@@ -15,7 +15,7 @@ def measure_sorting_time(algorithm, L):
 def experiment5():
     swap_values = range(0, 500, 10)
     list_length = 1000  
-    num_runs = 10
+    num_runs = 50
 
     quick_sort_times = []
     merge_sort_times = []
