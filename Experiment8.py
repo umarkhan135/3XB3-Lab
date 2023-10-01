@@ -42,3 +42,5 @@ def experiment8():
     plt.legend()
     plt.grid(True)
     plt.show()
+
+experiment8()
