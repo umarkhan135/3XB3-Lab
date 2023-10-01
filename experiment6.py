@@ -1,7 +1,11 @@
 import random
+from good_sorts import quicksort
+from Experiment8 import measure_execution_time
+import matplotlib.pyplot as plt
 
-def quicksort(L):
-    copy = quicksort_copy(L)
+
+def dual_quicksort(L):
+    copy = quicksort_copy2(L)
     for i in range(len(L)):
         L[i] = copy[i]
 
@@ -9,7 +13,7 @@ def quicksort(L):
 def swap(L, i, j):
     L[i], L[j] = L[j], L[i]
 
-def quicksort_copy(L):
+def quicksort_copy2(L):
     if len(L) <= 1:
         return L
     pivot1 = L[0]
@@ -41,12 +45,33 @@ def quicksort_copy(L):
             middle.append(num)
         else:
             right.append(num)
-    return quicksort_copy(left) + quicksort_copy(middle) +  quicksort_copy(right)
+    return quicksort_copy2(left) + quicksort_copy2(middle) +  quicksort_copy2(right)
 
 
 def create_random_list(length, max_value):
     return [random.randint(0, max_value) for _ in range(length)]
 
-list = create_random_list(10, 100)
-quicksort(list)
-print(list)
+    
+def experiment6():
+    
+    runs = 5
+    list_lengths = list(range(100, 100000, 1000))
+    quicksort_times = []
+    dual_quicksort_times = []
+    max_value = 1000
+    
+    for i in list_lengths:
+        random_list = create_random_list(i, max_value)
+        
+        quicksort_times.append(measure_execution_time(quicksort, random_list, runs))
+        dual_quicksort_times.append(measure_execution_time(dual_quicksort, random_list, runs))
+        
+    plt.plot(list_lengths, quicksort_times, label='Quick Sort')
+    plt.plot(list_lengths, dual_quicksort_times, label='Dual Quick Sort')
+    plt.xlabel('List Length')
+    plt.ylabel('Average Execution Time (s)')
+    plt.title('Quick Sort VS Dual Quick Sort')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+    

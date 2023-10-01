@@ -1,6 +1,7 @@
-import timeit
-import matplotlib.pyplot as plot
+import time
+import matplotlib.pyplot as plt
 import random
+from bubble_sort2 import measure_execution_time
 
 def swap(L, i, j):
     L[i], L[j] = L[j], L[i]
@@ -44,26 +45,26 @@ def create_random_list(length, max_value):
     return [random.randint(0, max_value) for _ in range(length)]
 
 
-def graphing(n):
-    times = []
-    times2 = []
-    for i in range(n):
-        list = create_random_list(1000,1000)
-        list2 = list.copy()
+def experiment2_selection():
+    
+    runs = 50
+    list_lengths = list(range(10, 1000, 10))
+    selectionsort_times = []
+    selection_sort2_times = []
+    max_value = 1000
+    
+    for i in list_lengths:
+        random_list = create_random_list(i, max_value)
         
-        start1 = timeit.default_timer()
-        selection_sort(list)
-        total = timeit.default_timer() - start1
-        times.append(total)
+        selectionsort_times.append(measure_execution_time(selection_sort, random_list, runs))
+        selection_sort2_times.append(measure_execution_time(selection_sort2, random_list, runs))
         
-        start2 = timeit.default_timer()
-        selection_sort2(list2)
-        total2 = timeit.default_timer() - start2
-        times2.append(total2)
-    return times,times2
-        
-time = graphing(1000)
-plot.plot(time[0], label='Selection Sort')
-plot.plot(time[1], label='Selection Sort 2')
-plot.legend()
-plot.show()
+    plt.plot(list_lengths, selectionsort_times, label='Selection Sort')
+    plt.plot(list_lengths, selection_sort2_times, label='Selection Sort 2')
+    plt.xlabel('List Length')
+    plt.ylabel('Average Execution Time (s)')
+    plt.title('Selection Sort VS Selection Sort 2')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+    
