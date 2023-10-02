@@ -17,7 +17,7 @@ def sorting_test(sorting_algorithm, L):
     time += end - start
     
     return time
-    
+
 def experiment4():
     avg_quicksort_times = []
     avg_mergesort_times = []
@@ -45,7 +45,7 @@ def experiment4():
 
     plt.xlabel('List Length')
     plt.ylabel('Average Execution Time (s)')
-    plt.title('Quicksort VS Mergesort VS Heapsort')
+    plt.title('Quick Sort VS Merge Sort VS Heap Sort')
     plt.legend()
     plt.show()
 
