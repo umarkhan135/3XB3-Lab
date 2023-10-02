@@ -1,64 +1,54 @@
-from bad_sorts import *
+from bad_sorts import insertion_sort
+from bad_sorts import bubble_sort
+from bad_sorts import selection_sort
+from bad_sorts import create_near_sorted_list
 
+import matplotlib.pyplot as plt
 import timeit
 
 max_value = 1000000
-fixed_length = 10000
-step = 1000
+fixed_length = 1000
+swap_steps = list(range(0, fixed_length + 100, 10))
 
-def average(L):
-    return sum(L)/len(L)
-
-def insertion_sort_test():  
-    average_insertion_sort_times = []
-    for _ in range(10):
-        insertion_sort_times = []
-        for i in range(1000, fixed_length, step):
-            time = 0
-            L = create_near_sorted_list(fixed_length, max_value, i)
-            start = timeit.default_timer()
-            insertion_sort(L)
-            end = timeit.default_timer()
-            time += end - start
-            insertion_sort_times.append(time)
-        average_insertion_sort_times.append(average(insertion_sort_times))
+def sorting_test(sorting_algorithm, L):
+    time = 0
+    start = timeit.default_timer()
+    sorting_algorithm(L)
+    end = timeit.default_timer()
+    time += end - start
     
-    return average_insertion_sort_times
-
-def bubble_sort_test():  
-    average_bubble_sort_times = []
-    for _ in range(10):
-        bubble_sort_times = []
-        for i in range(1000, fixed_length, step):
-            time = 0
-            L = create_near_sorted_list(fixed_length, max_value, i)
-            start = timeit.default_timer()
-            bubble_sort(L)
-            end = timeit.default_timer()
-            time += end - start
-            bubble_sort_times.append(time)
-        average_bubble_sort_times.append(average(bubble_sort_times))
-    
-    return average_bubble_sort_times
-
-def selection_sort_test():  
-    average_selection_sort_times = []
-    for _ in range(10):
-        selection_sort_times = []
-        for i in range(1000, fixed_length, step):
-            time = 0
-            L = create_near_sorted_list(fixed_length, max_value, i)
-            start = timeit.default_timer()
-            selection_sort(L)
-            end = timeit.default_timer()
-            time += end - start
-            selection_sort_times.append(time)
-        average_selection_sort_times.append(average(selection_sort_times))
-    print(average_selection_sort_times)
+    return time
 
 def experiment3():
-    print(insertion_sort_test())
-    print(bubble_sort_test())
-    print(selection_sort_test())
+
+    avg_insertion_sort_times = []
+    avg_bubble_sort_times = []
+    avg_selection_sort_times = []
+    for i in swap_steps:
+        insertion_sort_time = 0 
+        bubble_sort_time = 0
+        selection_sort_time = 0
+        for _ in range(10):
+            insertion_sort_list = create_near_sorted_list(fixed_length, max_value, i)
+            bubble_sort_list = insertion_sort_list.copy()
+            selection_sort_list = insertion_sort_list.copy()
+
+            insertion_sort_time += sorting_test(insertion_sort, insertion_sort_list)
+            bubble_sort_time += sorting_test(bubble_sort, bubble_sort_list)
+            selection_sort_time += sorting_test(selection_sort, selection_sort_list)
+        
+        avg_insertion_sort_times.append(insertion_sort_time/10)
+        avg_bubble_sort_times.append(bubble_sort_time/10)
+        avg_selection_sort_times.append(selection_sort_time/10)
+
+    plt.plot(swap_steps, avg_insertion_sort_times, label='Insertion Sort')
+    plt.plot(swap_steps, avg_bubble_sort_times, label='Bubble Sort')
+    plt.plot(swap_steps, avg_selection_sort_times, label='Selection Sort')
+
+    plt.xlabel('Number of Swaps')
+    plt.ylabel('Average Execution Time (s)')
+    plt.title('Insertion Sort VS Bubble Sort VS Selection Sort')
+    plt.legend()
+    plt.show()
 
 experiment3()
