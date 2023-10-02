@@ -45,7 +45,7 @@ def experiment3():
     plt.plot(swap_steps, avg_bubble_sort_times, label='Bubble Sort')
     plt.plot(swap_steps, avg_selection_sort_times, label='Selection Sort')
 
-    plt.xlabel('Number of Swap')
+    plt.xlabel('Number of Swaps')
     plt.ylabel('Average Execution Time (s)')
     plt.title('Insertion Sort VS Bubble Sort VS Selection Sort')
     plt.legend()
