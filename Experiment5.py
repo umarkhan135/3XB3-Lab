@@ -51,4 +51,3 @@ def experiment5():
     plt.grid()
     plt.show()
     
-experiment5()
